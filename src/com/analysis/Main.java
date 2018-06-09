@@ -21,6 +21,14 @@ public class Main {
         in.close();
         return s;
     }
+
+    public static String removeExtention(String fileNameExtension){
+        String fileName = fileNameExtension;
+        if (fileName.indexOf(".") > 0)
+            fileName = fileName.substring(0, fileName.lastIndexOf("."));
+        return fileName;
+    }
+
     public static ArrayList<String> getFileNames(){
         ArrayList<String> s = new ArrayList<>();
 
@@ -29,7 +37,9 @@ public class Main {
 
         for (int i = 0; i < listOfFiles.length; i++) {
             if (listOfFiles[i].isFile()) {
-                s.add(listOfFiles[i].getName());
+                // Get file name, remove the extension and then split it and return the last bit
+                String[] bits=removeExtention(listOfFiles[i].getName()).split("_");
+                s.add( bits[bits.length-1]);
             } else if (listOfFiles[i].isDirectory()) {
                 System.out.println("Directory " + listOfFiles[i].getName());
             }
@@ -40,7 +50,7 @@ public class Main {
 
         //String[] s = getUserInput();
         //System.out.print(s[0]+""+s[1]+""+s[2]);
-        
+
         ArrayList<String> s = getFileNames();
         for (String item : s) {
             System.out.println(item);
