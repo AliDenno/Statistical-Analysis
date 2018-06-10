@@ -2,6 +2,8 @@ package com.analysis;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
@@ -29,8 +31,8 @@ public class Main {
         return fileName;
     }
 
-    public static ArrayList<String> getFileNames(){
-        ArrayList<String> s = new ArrayList<>();
+    public static Map<String, String> getFileNames(){
+        Map<String, String> map = new HashMap<String, String>();
 
         File folder = new File("data");
         File[] listOfFiles = folder.listFiles();
@@ -39,21 +41,25 @@ public class Main {
             if (listOfFiles[i].isFile()) {
                 // Get file name, remove the extension and then split it and return the last bit
                 String[] bits=removeExtention(listOfFiles[i].getName()).split("_");
-                s.add( bits[bits.length-1]);
+                map.put(bits[bits.length-1], listOfFiles[i].getName());
             } else if (listOfFiles[i].isDirectory()) {
                 System.out.println("Directory " + listOfFiles[i].getName());
             }
         }
-        return s;
+        return map;
     }
     public static void main(String[] args) throws IOException {
 
         //String[] s = getUserInput();
         //System.out.print(s[0]+""+s[1]+""+s[2]);
 
-        ArrayList<String> s = getFileNames();
-        for (String item : s) {
-            System.out.println(item);
+        Map<String, String> map= getFileNames();
+
+        System.out.println(map.get("2015"));
+
+        for (String key : map.keySet()) {
+            // use the key here
+            System.out.println(key);
         }
     }
 }
